@@ -7,7 +7,6 @@ body {
 }
 
 .container {
-    max-width: 800px; /* Set max-width to prevent it from being too wide */
     margin: 0 auto;
     background-color: #fff;
     padding: 30px;
