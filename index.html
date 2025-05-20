@@ -1,149 +1,220 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-100 text-gray-900">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Developer Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Developer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="gumroad.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
+    <!-- Alpine.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        /* Optional: Add some custom styles or overrides */
+        body {
+            background-color: #f4f2ee; /* Light LinkedIn background */
+            font-family: 'Arial', sans-serif; /* Match LinkedIn font */
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 0.5rem; /* Rounded corners */
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* Subtle shadow */
+        }
+
+        /* Custom scrollbar (optional, for better aesthetics) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
 </head>
-<body class="p-6">
+<body class="font-sans antialiased">
 
-    <div class="max-w-4xl mx-auto">
+<!-- Header (Simplified LinkedIn-like bar) -->
+<header class="bg-white shadow-sm py-3 px-6">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center">
+            <!-- Profile Icon Placeholder -->
+            <div class="w-9 h-9 bg-blue-600 rounded-full text-white flex items-center justify-center text-sm font-bold mr-3">
 
-        <!-- Hero Section -->
-        <header class="text-center py-12">
-            <img src="https://via.placeholder.com/150" alt="Profile Picture" class="rounded-full w-32 h-32 mx-auto mb-4 border-4 border-white shadow-lg">
-            <h1 class="text-4xl font-bold text-gray-800 mb-2 font-caveat">Your Name Here</h1>
-            <p class="text-xl text-gray-600 font-inter">Frontend Developer | Web Designer</p>
-            <div class="mt-6 space-x-4">
-                <a href="#projects" class="px-4 py-2 text-white transition duration-300 font-inter hand-drawn-button">View Projects</a>
-                <a href="#contact" class="px-4 py-2 text-indigo-600 transition duration-300 font-inter hand-drawn-button">Get in Touch</a>
             </div>
-        </header>
+            <span class="text-xl font-bold text-gray-800 hidden md:block">Timothy Lampung</span>
+        </div>
+        <!-- Navigation -->
+        <nav class="text-sm"
+             x-data="{ navItems: [{ text: 'About', href: '#about' }, { text: 'Experience', href: '#experience' }, { text: 'Projects', href: '#projects' }, { text: 'Skills', href: '#skills' }, { text: 'Contact', href: '#contact' }] }">
+            <template x-for="item in navItems" :key="item.href">
+                <a :href="item.href" class="text-gray-600 hover:text-gray-800 px-3 py-2" x-text="item.text"></a>
+            </template>
+        </nav>
+    </div>
+</header>
 
-        <!-- About Section -->
-        <section id="about" class="hand-drawn-card p-6 mt-8">
-            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8 font-caveat">About Me</h2>
-            <p class="text-lg text-gray-700 leading-relaxed font-inter">
-                Hello! I'm [Your Name], a passionate [Your Title] with [Number] years of experience building responsive and user-friendly websites.
-                I specialize in [Mention your key technologies, e.g., React, Vue, Tailwind CSS, JavaScript].
-                I love turning complex problems into simple, beautiful, and intuitive designs. When I'm not coding, you can find me [Mention a hobby, e.g., hiking, reading, playing music].
-            </p>
-        </section>
+<!-- Main Content Area -->
+<main class="container max-w-[70%] mx-auto mt-6 px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <!-- Skills Section -->
-        <section id="skills" class="hand-drawn-card p-6 mt-8">
-            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8 font-caveat">Skills</h2>
-            <div class="flex flex-wrap justify-center gap-4 font-inter">
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">HTML5</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">CSS3</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">JavaScript</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">React</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">Vue.js</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">Tailwind CSS</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">Git</span>
-                <span class="px-4 py-2 bg-gray-200 text-gray-800 rounded-full text-sm">Node.js (Basic)</span>
-                <!-- Add more skills -->
-            </div>
-        </section>
+    <!-- Left Column (often summary/about on LinkedIn) -->
+    <div class="md:col-span-1 space-y-6">
 
-        <!-- Projects Section -->
-        <section id="projects" class="hand-drawn-card p-6 mt-8">
-            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8 font-caveat">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                <!-- Project Card 1 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://via.placeholder.com/400x250" alt="Project 1" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 font-inter">Project Title 1</h3>
-                        <p class="text-gray-700 mb-4 font-inter">A brief description of the project.
-
-
-
-This project involved building a responsive web application using [mention key technologies used, e.g., React and Tailwind CSS]. It features [mention a key feature, e.g., a dynamic dashboard and user authentication].</p>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-indigo-600 hover:underline font-inter">View Demo</a>
-                            <a href="#" class="text-indigo-600 hover:underline font-inter">Source Code</a>
-                        </div>
-                    </div>
+        <!-- Hero/Intro Card -->
+        <section id="hero" class="card p-6" x-data="
+            { name: 'Timothy Lampung', headline: 'Software Developer',
+            location: 'Malaysia | Sarawak',
+            summary: 'I am fullstack software developer with 6 Years Experience in related field. I am passionate about robotic, mobile app and web app development' }">
+            <div class="flex flex-col items-center">
+                <!-- Profile Picture Placeholder -->
+                <img class="w-28 h-28 rounded-full border-4 border-white shadow-lg -mt-10 mb-4"
+                     src="./static/img/me.jpg" alt="Profile Picture">
+                <h1 class="text-2xl font-bold text-gray-800" x-text="name"></h1>
+                <p class="text-gray-600 text-center mt-1" x-text="headline"></p>
+                <p class="text-gray-500 text-sm mt-2" x-text="location"></p>
+                <div class="flex space-x-4 mt-4">
+                    <!--                    <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Open to work</a>-->
+                    <a href="#contact" class="text-blue-600 hover:text-blue-800 font-semibold">Contact Info</a>
                 </div>
-
-                <!-- Project Card 2 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://via.placeholder.com/400x250" alt="Project 2" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2 font-inter">Project Title 2</h3>
-                        <p class="text-gray-700 mb-4 font-inter">This project was focused on [mention the goal, e.g., creating a static website for a local business]. It was built with [mention technologies, e.g., pure HTML, CSS, and JavaScript] and optimized for performance.</p>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-indigo-600 hover:underline font-inter">View Demo</a>
-                            <a href="#" class="text-indigo-600 hover:underline font-inter">Source Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add more project cards as needed -->
-
+            </div>
+            <div class="mt-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">About</h2>
+                <p class="text-gray-700 text-sm leading-relaxed" x-text="summary">
+                </p>
             </div>
         </section>
 
-        <!-- Working Experience Section -->
-        <section id="experience" class="hand-drawn-card p-6 mt-8">
-            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8 font-caveat">Working Experience</h2>
-            <!-- Add your work experience details here -->
-
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-800 font-inter">Frontend Developer</h3>
-                <p class="text-gray-600 italic mb-2 font-inter">Tech Solutions Inc. | Jan 2022 - Present</p>
-                <ul class="list-disc list-inside text-gray-700 font-inter">
-                    <li>Developed and maintained responsive web applications using React and Tailwind CSS.</li>
-                    <li>Collaborated with design and backend teams to implement new features.</li>
-                    <li>Optimized application performance, leading to a 15% reduction in load times.</li>
-                    <li>Participated in code reviews and contributed to improving code quality standards.</li>
-                </ul>
-            </div>
-
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-800 font-inter">Junior Web Designer</h3>
-                <p class="text-gray-600 italic mb-2 font-inter">Creative Agency Co. | Jun 2020 - Dec 2021</p>
-                <ul class="list-disc list-inside text-gray-700 font-inter">
-                    <li>Designed and built static websites for clients using HTML, CSS, and JavaScript.</li>
-                    <li>Ensured cross-browser compatibility and mobile responsiveness for all projects.</li>
-                    <li>Worked closely with clients to gather requirements and deliver projects on time.</li>
-                </ul>
-            </div>
-
-            <!-- Add more experience blocks as needed -->
-
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="hand-drawn-card p-6 mt-8">
-            <h2 class="text-3xl font-semibold text-gray-800 text-center mb-8 font-caveat">Get in Touch</h2>
-            <p class="text-lg text-gray-700 text-center mb-8 font-inter">
-                Have a project in mind or just want to say hello? Feel free to reach out!
-            </p>
-            <div class="flex justify-center space-x-6 font-inter">
-                <a href="mailto:your.email@example.com" class="text-indigo-600 hover:underline">Email</a>
-                <a href="https://linkedin.com/in/yourprofile" class="text-indigo-600 hover:underline" target="_blank">LinkedIn</a>
-                <a href="https://github.com/yourusername" class="text-indigo-600 hover:underline" target="_blank">GitHub</a>
-                <!-- Add more contact links -->
+        <!-- Skills Card (Could be on the right, but fits left column too) -->
+        <section id="skills" class="card p-6"
+                 x-data="{ skills: ['JavaScript', 'React', 'Spring boot', 'Flask', 'Django', 'FastAPI', 'Angular', 'Java', 'Type Script', 'Tailwind CSS', 'Node.js', 'Python', 'SQL', 'Git', 'Arduino', 'C++', 'Flutter'] }">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Skills</h2>
+            <div class="flex flex-wrap gap-2 text-sm">
+                <template x-for="skill in skills" :key="skill">
+                    <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full" x-text="skill"></span>
+                </template>
+                <!-- Add more skills as needed in the x-data array above -->
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="text-center py-8 border-t border-gray-300 text-gray-600 text-sm font-inter">
-            &copy; 2024 Your Name. All rights reserved.
-        </footer>
+        <!-- Contact Card -->
+        <section id="contact" class="card p-6"
+                 x-data="{ email: 'timothylampung@gmail.com ', linkedin: 'https://www.linkedin.com/in/timothy-lampung/', github: 'https://github.com/timothylampung/' }">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Contact</h2>
+            <p class="text-gray-700 mb-2">Email: <a :href="'mailto:' + email" class="text-blue-600 hover:underline"
+                                                    x-text="email"></a></p>
+            <p class="text-gray-700 mb-2">LinkedIn: <a :href="linkedin" target="_blank"
+                                                       class="text-blue-600 hover:underline" x-text="linkedin"></a></p>
+            <p class="text-gray-700">GitHub: <a :href="github" target="_blank" class="text-blue-600 hover:underline"
+                                                x-text="github"></a></p>
+            <!-- Add other contact info like phone (optional), portfolio link if separate, etc. -->
+        </section>
 
     </div>
 
-</body
+    <!-- Right Column (often experience, education, projects) -->
+    <div class="md:col-span-2 space-y-6">
+
+        <!-- Experience Card -->
+        <section id="experience" class="card p-6"
+                 x-data="{ experiences:
+                 [
+                 { title: 'Intern Software Developer (Terang Academy)', company: 'Terang Academy', type: 'Internship', duration: '2018 · 6 Months', responsibilities: ['Front End (AngularTS)', 'Backend (SpringBoot)'] },
+                 { title: 'Junior Software Developer (JLM)', company: 'Jabatan Laut Malaysia', type: 'Internship', duration: '2018 · 6 Months', responsibilities: ['Front End (AngularJS)', 'Backend (SpringBoot -MVC)'] },
+                 { title: 'Junior Software Developer (Canang Technology)', company: 'Canang Technology', type: 'Fulltime', duration: '2018 · 5 Months', responsibilities: ['Lead team of 3 to deliver project', 'Involve in URS (Domain Driven Design)'] },
+                 { title: 'Software Developer (Volume Resaerch & Developement)', company: 'Volume Research & Development sdn. bhd.', type: 'Fulltime', duration: '2018 - Now · 7 Years',
+                 responsibilities: ['Involved Product development (sdk for automatic kitchen)', 'Develop embedded system for robotic kitchen', 'Full integration for robotic kitchen'] },
+                 ] }">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Experience</h2>
+            <div class="space-y-6">
+                <template x-for="experience in experiences" :key="experience.title">
+                    <div class="flex">
+                        <!--                        <img src="https://via.placeholder.com/50" alt="Company Logo"-->
+                        <!--                             class="w-12 h-12 mr-4 rounded-full">-->
+                        <div>
+                            <h3 class="font-semibold text-gray-800" x-text="experience.title"></h3>
+                            <p class="text-gray-600 text-sm"><span x-text="experience.company"></span> · <span
+                                    x-text="experience.type"></span></p>
+                            <p class="text-gray-500 text-xs mt-1" x-text="experience.duration"></p>
+                            <ul class="list-disc list-inside text-gray-700 text-sm mt-2 space-y-1">
+                                <template x-for="responsibility in experience.responsibilities" :key="responsibility">
+                                    <li x-text="responsibility"></li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr class="border-gray-200">
+                </template>
+                <!-- Add more experience items in the x-data array above -->
+            </div>
+        </section>
+
+        <!-- Projects Card -->
+        <section id="projects" class="card p-6"
+                 x-data="{ projects: [
+                 { title: 'MMDIS (Malaysia Marine Department Information System)', description: 'Involved as a frontend developer', projectLink: '#', githubLink: '#', technologies: ['AngularJS', 'Spring Boot', 'MySQL'] },
+                 { title: 'SPOT IT Asset management', description: 'Develop a headless asset tagging system', projectLink: '#', githubLink: '#', technologies: ['AngularTS', 'Android Koin Framework', 'PostgreSQL', 'Spring Boot'] },
+                 { title: 'Sapie Credit', description: 'A clients project that helps user restore credit score', projectLink: '#', githubLink: '#', technologies: ['AngularTS', 'PostgreSQL', 'Spring Boot'] },
+                 { title: 'Robotic Automatic Kitchen', description: 'Involved as a product developer, to develop a robotic kitchen that automate cooking processes', projectLink: '#', githubLink: '#', technologies: ['Python', 'FastAPI', 'C++', 'Arduino', 'PlatformIO'] }
+                 ] }">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Projects</h2>
+            <div class="space-y-6">
+                <template x-for="project in projects" :key="project.title">
+                    <div>
+                        <h3 class="font-semibold text-gray-800" x-text="project.title"></h3>
+                        <p class="text-gray-700 text-sm mt-1" x-text="project.description"></p>
+<!--                        <div class="mt-2 flex space-x-3 text-sm">-->
+<!--                            <a :href="project.projectLink" class="text-blue-600 hover:underline">View Project</a>-->
+<!--                            <a :href="project.githubLink" class="text-blue-600 hover:underline">GitHub Repo</a>-->
+<!--                        </div>-->
+                        <div class="mt-2 flex flex-wrap gap-1 text-xs text-gray-600">
+                            <template x-for="tech in project.technologies" :key="tech">
+                                <span class="bg-gray-100 px-2 py-0.5 rounded" x-text="tech"></span>
+                            </template>
+                        </div>
+                    </div>
+                    <hr class="border-gray-200">
+                </template>
+                <!-- Add more project items in the x-data array above -->
+            </div>
+        </section>
+
+        <!-- Education Card (Optional) -->
+        <section id="education" class="card p-6"
+                 x-data="{ education: [
+                 { institution: 'Terang Academy', degree: 'Training', dates: 'Graduation Date (2018)', details: undefined },
+                 { institution: 'University Putra Malaysia', degree: 'Bachelor of Computer Science (Multimedia)', dates: 'Graduation Date (2018)', details: undefined },
+                 { institution: 'Labuan Matriculation Collage', degree: 'Computer Since', dates: 'Graduation Date (2013)', details: null }]
+                 }">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Education</h2>
+            <div class="space-y-4">
+                <template x-for="edu in education" :key="edu.institution">
+                    <div>
+                        <h3 class="font-semibold text-gray-800" x-text="edu.institution"></h3>
+                        <p class="text-gray-600 text-sm" x-text="edu.degree"></p>
+                        <p class="text-gray-500 text-xs mt-1" x-text="edu.dates"></p>
+                        <p class="text-gray-700 text-sm mt-1" x-text="edu.details" x-show="edu.details"></p>
+                    </div>
+                    <hr class="border-gray-200">
+                </template>
+                <!-- Add more education items in the x-data array above -->
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- Footer (Simple) -->
+<footer class="container mx-auto mt-8 mb-6 px-6 text-center text-gray-600 text-sm">
+    <p>&copy; 2025 Timothy Lampung</p>
+</footer>
 
 </body>
 </html>
