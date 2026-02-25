@@ -1,220 +1,676 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timothy Lampung - Developer Portfolio</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <title>SILAS — The Midnight Hymn</title>
+    <meta name="description"
+        content="A high-performance, Electron-based local-first worship presentation engine. Real-time sync, zero latency.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        /* Optional: Add some custom styles or overrides */
+        :root {
+            /* Design System Tokens */
+            --bg-void: #000000;
+            --bg-deep: #09090B;
+            --bg-base: #0F0F12;
+            --bg-raised: #18181B;
+            --bg-elevated: #27272A;
+            --bg-overlay: rgba(0, 0, 0, 0.75);
+
+            --text-primary: #FAFAFA;
+            --text-secondary: #A1A1AA;
+            --text-muted: #52525B;
+            --text-inverse: #09090B;
+
+            --accent-primary: #818CF8;
+            --accent-hover: #6366F1;
+            --accent-pressed: #4F46E5;
+            --accent-subtle: rgba(129, 140, 248, 0.10);
+            --accent-glow: rgba(129, 140, 248, 0.3);
+
+            --warm-primary: #FBBF24;
+            --success: #34D399;
+            --error: #F87171;
+
+            --border-default: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-display: 'Outfit', var(--font-sans);
+
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+
+            --shadow-glow: 0 0 30px var(--accent-glow);
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f4f2ee; /* Light LinkedIn background */
-            font-family: 'Arial', sans-serif; /* Match LinkedIn font */
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .card {
-            background-color: #fff;
-            border-radius: 0.5rem; /* Rounded corners */
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); /* Subtle shadow */
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 1000;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-default);
         }
 
-        /* Custom scrollbar (optional, for better aesthetics) */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-pressed));
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #888;
+        nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .cta-header {
+            padding: 10px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .cta-header:hover {
+            background: var(--accent-primary);
+            color: var(--bg-void);
+            border-color: var(--accent-primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 5% 60px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(129, 140, 248, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.1) 0%, transparent 40%),
+                var(--bg-void);
+            overflow: hidden;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(129, 140, 248, 0.05) 0%, transparent 25%);
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--accent-subtle);
+            border: 1px solid var(--accent-glow);
+            color: var(--accent-primary);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+            background: linear-gradient(to bottom, #fff 40%, #A1A1AA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 600px;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--bg-void);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(129, 140, 248, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border-default);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-raised);
+            border-color: var(--text-secondary);
+        }
+
+        .version-info {
+            margin-top: 32px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Mockup Section --- */
+        .mockup-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: -60px auto 100px;
+            padding: 0 5%;
+            perspective: 2000px;
+        }
+
+        .mockup {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--bg-base);
+            border: 1px solid var(--border-hover);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            transform: rotateX(5deg) scale(0.95);
+            transition: transform 1s var(--ease-out);
+        }
+
+        .mockup:hover {
+            transform: rotateX(0deg) scale(1);
+        }
+
+        .mockup-header {
+            height: 40px;
+            background: var(--bg-raised);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+
+        .dot-1 {
+            background: #ff5f56;
+        }
+
+        .dot-2 {
+            background: #ffbd2e;
+        }
+
+        .dot-3 {
+            background: #27c93f;
+        }
+
+        .mockup-content {
+            height: calc(100% - 40px);
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            background: var(--bg-deep);
+        }
+
+        .sidebar {
+            border-right: 1px solid var(--border-default);
+            background: var(--bg-base);
+            padding: 20px;
+        }
+
+        .main-ui {
+            display: grid;
+            place-items: center;
+            padding: 40px;
+            background: var(--bg-deep);
+        }
+
+        .lyrics-preview {
+            text-align: center;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: white;
+            opacity: 0.9;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .small-text {
+            height: 12px;
+            background: var(--bg-elevated);
             border-radius: 4px;
+            margin-bottom: 12px;
+            opacity: 0.5;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+        /* --- Features Section --- */
+        .features {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 40px;
+            background: var(--bg-raised);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-elevated);
+            transform: translateY(-8px);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-subtle);
+            color: var(--accent-primary);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 80px 5% 40px;
+            border-top: 1px solid var(--border-default);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            background: var(--bg-void);
+        }
+
+        .footer-bottom {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .socials {
+            display: flex;
+            gap: 24px;
+        }
+
+        .socials a {
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .mockup-container {
+                margin-top: 20px;
+            }
+
+            .mockup-content {
+                grid-template-columns: 1fr;
+            }
+
+            .mockup-content .sidebar {
+                display: none;
+            }
         }
     </style>
 </head>
-<body class="font-sans antialiased">
 
-<!-- Header (Simplified LinkedIn-like bar) -->
-<header class="bg-white shadow-sm py-3 px-6  hidden md:block">
-    <div class="container mx-auto flex justify-between items-center">
-        <div class="flex items-center">
-            <!-- Profile Icon Placeholder -->
-            <div class="w-9 h-9 bg-blue-600 rounded-full text-white flex items-center justify-center text-sm font-bold mr-3">
+<body>
 
+    <header>
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                <i data-lucide="music-2" size="20" stroke-width="3"></i>
             </div>
-            <span class="text-xl font-bold text-gray-800 hidden md:block">Timothy Lampung</span>
-        </div>
-        <!-- Navigation -->
-        <nav class="text-sm"
-             x-data="{ navItems: [{ text: 'About', href: '#about' }, { text: 'Experience', href: '#experience' }, { text: 'Projects', href: '#projects' }, { text: 'Skills', href: '#skills' }, { text: 'Contact', href: '#contact' }] }">
-            <template x-for="item in navItems" :key="item.href">
-                <a :href="item.href" class="text-gray-600 hover:text-gray-800 px-3 py-2" x-text="item.text"></a>
-            </template>
+            SILAS
+        </a>
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#downloads">Downloads</a>
+            <a href="#">Documentation</a>
         </nav>
-    </div>
-</header>
+        <a href="#downloads" class="cta-header">Get SILAS</a>
+    </header>
 
-<!-- Main Content Area -->
-<main class="container lg:max-w-[70%] mx-auto mt-6 px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <main>
+        <section class="hero">
+            <div class="hero-bg"></div>
 
-    <!-- Left Column (often summary/about on LinkedIn) -->
-    <div class="md:col-span-1 space-y-6">
+            <div class="hero-chip">
+                <i data-lucide="sparkles" size="14"></i>
+                Version 1.0.0 Now Live
+            </div>
 
-        <!-- Hero/Intro Card -->
-        <section id="hero" class="card p-6" x-data="
-            { name: 'Timothy Lampung', headline: 'Software Developer',
-            location: 'Malaysia | Sarawak',
-            summary: 'I am fullstack software developer with years of experience in related field. I am passionate about robotic, mobile app and web app development' }">
-            <div class="flex flex-col items-center">
-                <!-- Profile Picture Placeholder -->
-                <img class="w-28 h-28 rounded-full border-4 border-white shadow-lg -mt-10 mb-4"
-                     src="./static/img/me.jpg" alt="Profile Picture">
-                <h1 class="text-2xl font-bold text-gray-800" x-text="name"></h1>
-                <p class="text-gray-600 text-center mt-1" x-text="headline"></p>
-                <p class="text-gray-500 text-sm mt-2" x-text="location"></p>
-                <div class="flex space-x-4 mt-4">
-                    <!--                    <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Open to work</a>-->
-                    <a href="#contact" class="text-blue-600 hover:text-blue-800 font-semibold">Contact Info</a>
+            <h1>High-Performance <br> Worship Sync</h1>
+
+            <p>
+                The "Midnight Hymn" engine. A local-first, zero-latency broadcast hub for lyrics, chords, and stage
+                harmony.
+            </p>
+
+            <div class="hero-actions" id="downloads">
+                <a href="./dist/SILAS Setup 1.0.0.exe" class="btn btn-primary">
+                    <i data-lucide="download"></i>
+                    Download for Windows
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <i data-lucide="smartphone"></i>
+                    Open Web App
+                </a>
+            </div>
+
+            <div class="version-info">
+                Free & Open Source • Requires Windows 10+
+            </div>
+        </section>
+
+        <section class="mockup-container">
+            <div class="mockup">
+                <div class="mockup-header">
+                    <div class="dot dot-1"></div>
+                    <div class="dot dot-2"></div>
+                    <div class="dot dot-3"></div>
+                </div>
+                <div class="mockup-content">
+                    <div class="sidebar">
+                        <div class="small-text" style="width: 80%"></div>
+                        <div class="small-text" style="width: 60%"></div>
+                        <div class="small-text" style="width: 90%; margin-top: 30px"></div>
+                        <div class="small-text" style="width: 70%"></div>
+                        <div class="small-text" style="width: 50%"></div>
+                    </div>
+                    <div class="main-ui">
+                        <div class="lyrics-preview">
+                            How great is our God,<br>
+                            Sing with me
+                        </div>
+                    </div>
+                    <div class="sidebar" style="border-right: none; border-left: 1px solid var(--border-default)">
+                        <div class="small-text"
+                            style="width: 100%; height: 30px; background: var(--accent-subtle); border-left: 3px solid var(--accent-primary)">
+                        </div>
+                        <div class="small-text" style="width: 100%"></div>
+                        <div class="small-text" style="width: 100%"></div>
+                        <div class="small-text" style="width: 100%"></div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-6">
-                <h2 class="text-lg font-semibold text-gray-800 mb-3">About</h2>
-                <p class="text-gray-700 text-sm leading-relaxed" x-text="summary">
-                </p>
+        </section>
+
+        <section class="features" id="features">
+            <div class="section-title">
+                <h2>Built for the Sanctuary</h2>
+                <p>Designed for speed, reliability, and atmospheric perfection.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="zap"></i></div>
+                    <h3>Invisible Strings</h3>
+                    <p>Proprietary WebSocket broadcast system ensures sub-20ms latency between the booth and the
+                        musicians.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="search"></i></div>
+                    <h3>Magic Discovery</h3>
+                    <p>Zero configuration required. mDNS (Bonjour) technology lets mobile devices find the host
+                        automatically.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="database"></i></div>
+                    <h3>Local First</h3>
+                    <p>Runs entirely on your local network. No internet dependency. Your data stays on your machine with
+                        SQLite.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="monitor"></i></div>
+                    <h3>Hardware Driven</h3>
+                    <p>利用 Chromium's hardware acceleration for buttery-smooth 60fps motion backgrounds and transitions.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="layout"></i></div>
+                    <h3>Dual-View PWA</h3>
+                    <p>Musicians toggle between High-Contrast Lyric view and Dynamic Chord view with real-time
+                        transposition.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="moon"></i></div>
+                    <h3>Midnight Mode</h3>
+                    <p>OLED-optimized dark mode reduces stage light pollution while maintaining perfect legibility for
+                        performers.</p>
+                </div>
             </div>
         </section>
+    </main>
 
-        <!-- Skills Card (Could be on the right, but fits left column too) -->
-        <section id="skills" class="card p-6"
-                 x-data="{ skills: ['JavaScript', 'React', 'Spring boot', 'Flask', 'Django', 'FastAPI', 'Angular', 'Java', 'Type Script', 'Tailwind CSS', 'Node.js', 'Python', 'SQL', 'Git', 'Arduino', 'C++', 'Flutter'] }">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Skills</h2>
-            <div class="flex flex-wrap gap-2 text-sm">
-                <template x-for="skill in skills" :key="skill">
-                    <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full" x-text="skill"></span>
-                </template>
-                <!-- Add more skills as needed in the x-data array above -->
+    <footer>
+        <div class="logo">
+            <div class="logo-icon">
+                <i data-lucide="music-2" size="20" stroke-width="3"></i>
             </div>
-        </section>
+            SILAS
+        </div>
 
-        <!-- Contact Card -->
-        <section id="contact" class="card p-6"
-                 x-data="{ email: 'timothylampung@gmail.com ', linkedin: 'https://www.linkedin.com/in/timothy-lampung/', github: 'https://github.com/timothylampung/' }">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Contact</h2>
-            <p class="text-gray-700 mb-2">Email: <a :href="'mailto:' + email" class="text-blue-600 hover:underline"
-                                                    x-text="email"></a></p>
-            <p class="text-gray-700 mb-2 ">LinkedIn: <a :href="linkedin" target="_blank"
-                                                       class="text-blue-600 hover:underline" x-text="linkedin"></a></p>
-            <p class="text-gray-700">GitHub: <a :href="github" target="_blank" class="text-blue-600 hover:underline"
-                                                x-text="github"></a></p>
-            <!-- Add other contact info like phone (optional), portfolio link if separate, etc. -->
-        </section>
-
-    </div>
-
-    <!-- Right Column (often experience, education, projects) -->
-    <div class="md:col-span-2 space-y-6">
-
-        <!-- Experience Card -->
-        <section id="experience" class="card p-6"
-                 x-data="{ experiences:
-                 [
-                 { title: 'Intern Software Developer (Terang Academy)', company: 'Terang Academy', type: 'Internship', duration: '2018 · 6 Months', responsibilities: ['Front End (AngularTS)', 'Backend (SpringBoot)'] },
-                 { title: 'Junior Software Developer (JLM)', company: 'Jabatan Laut Malaysia', type: 'Internship', duration: '2018 · 6 Months', responsibilities: ['Front End (AngularJS)', 'Backend (SpringBoot -MVC)'] },
-                 { title: 'Junior Software Developer (Canang Technology)', company: 'Canang Technology', type: 'Fulltime', duration: '2018 · 5 Months', responsibilities: ['Lead team of 3 to deliver project', 'Involve in URS (Domain Driven Design)'] },
-                 { title: 'Software Developer (Volume Resaerch & Developement)', company: 'Volume Research & Development sdn. bhd.', type: 'Fulltime', duration: '2018 - Now · 7 Years',
-                 responsibilities: ['Involved Product development (sdk for automatic kitchen)', 'Develop embedded system for robotic kitchen', 'Full integration for robotic kitchen'] },
-                 ] }">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Experience</h2>
-            <div class="space-y-6">
-                <template x-for="experience in experiences" :key="experience.title">
-                    <div class="flex">
-                        <!--                        <img src="https://via.placeholder.com/50" alt="Company Logo"-->
-                        <!--                             class="w-12 h-12 mr-4 rounded-full">-->
-                        <div>
-                            <h3 class="font-semibold text-gray-800" x-text="experience.title"></h3>
-                            <p class="text-gray-600 text-sm"><span x-text="experience.company"></span> · <span
-                                    x-text="experience.type"></span></p>
-                            <p class="text-gray-500 text-xs mt-1" x-text="experience.duration"></p>
-                            <ul class="list-disc list-inside text-gray-700 text-sm mt-2 space-y-1">
-                                <template x-for="responsibility in experience.responsibilities" :key="responsibility">
-                                    <li x-text="responsibility"></li>
-                                </template>
-                            </ul>
-                        </div>
-                    </div>
-                    <hr class="border-gray-200">
-                </template>
-                <!-- Add more experience items in the x-data array above -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 SILAS Project. All rights reserved.</p>
+            <div class="socials">
+                <a href="#"><i data-lucide="github" size="20"></i></a>
+                <a href="#"><i data-lucide="twitter" size="20"></i></a>
             </div>
-        </section>
+        </div>
+    </footer>
 
-        <!-- Projects Card -->
-        <section id="projects" class="card p-6"
-                 x-data="{ projects: [
-                 { title: 'MMDIS (Malaysia Marine Department Information System)', description: 'Involved as a frontend developer', projectLink: '#', githubLink: '#', technologies: ['AngularJS', 'Spring Boot', 'MySQL'] },
-                 { title: 'SPOT IT Asset management', description: 'Develop a headless asset tagging system', projectLink: '#', githubLink: '#', technologies: ['AngularTS', 'Android Koin Framework', 'PostgreSQL', 'Spring Boot'] },
-                 { title: 'Sapie Credit', description: 'A clients project that helps user restore credit score', projectLink: '#', githubLink: '#', technologies: ['AngularTS', 'PostgreSQL', 'Spring Boot'] },
-                 { title: 'Robotic Automatic Kitchen', description: 'Involved as a product developer, to develop a robotic kitchen that automate cooking processes', projectLink: '#', githubLink: '#', technologies: ['Python', 'FastAPI', 'C++', 'Arduino', 'PlatformIO'] }
-                 ] }">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Projects</h2>
-            <div class="space-y-6">
-                <template x-for="project in projects" :key="project.title">
-                    <div>
-                        <h3 class="font-semibold text-gray-800" x-text="project.title"></h3>
-                        <p class="text-gray-700 text-sm mt-1" x-text="project.description"></p>
-<!--                        <div class="mt-2 flex space-x-3 text-sm">-->
-<!--                            <a :href="project.projectLink" class="text-blue-600 hover:underline">View Project</a>-->
-<!--                            <a :href="project.githubLink" class="text-blue-600 hover:underline">GitHub Repo</a>-->
-<!--                        </div>-->
-                        <div class="mt-2 flex flex-wrap gap-1 text-xs text-gray-600">
-                            <template x-for="tech in project.technologies" :key="tech">
-                                <span class="bg-gray-100 px-2 py-0.5 rounded" x-text="tech"></span>
-                            </template>
-                        </div>
-                    </div>
-                    <hr class="border-gray-200">
-                </template>
-                <!-- Add more project items in the x-data array above -->
-            </div>
-        </section>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
 
-        <!-- Education Card (Optional) -->
-        <section id="education" class="card p-6"
-                 x-data="{ education: [
-                 { institution: 'Terang Academy', degree: 'Training', dates: 'Graduation Date (2018)', details: undefined },
-                 { institution: 'University Putra Malaysia', degree: 'Bachelor of Computer Science (Multimedia)', dates: 'Graduation Date (2018)', details: undefined },
-                 { institution: 'Labuan Matriculation Collage', degree: 'Computer Since', dates: 'Graduation Date (2013)', details: null }]
-                 }">
-            <h2 class="text-lg font-semibold text-gray-800 mb-4">Education</h2>
-            <div class="space-y-4">
-                <template x-for="edu in education" :key="edu.institution">
-                    <div>
-                        <h3 class="font-semibold text-gray-800" x-text="edu.institution"></h3>
-                        <p class="text-gray-600 text-sm" x-text="edu.degree"></p>
-                        <p class="text-gray-500 text-xs mt-1" x-text="edu.dates"></p>
-                        <p class="text-gray-700 text-sm mt-1" x-text="edu.details" x-show="edu.details"></p>
-                    </div>
-                    <hr class="border-gray-200">
-                </template>
-                <!-- Add more education items in the x-data array above -->
-            </div>
-        </section>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-    </div>
-</main>
-
-<!-- Footer (Simple) -->
-<footer class="container mx-auto mt-8 mb-6 px-6 text-center text-gray-600 text-sm">
-    <p>&copy; 2025 Timothy Lampung</p>
-</footer>
-
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+                header.style.height = '70px';
+            } else {
+                header.style.background = 'rgba(9, 9, 11, 0.8)';
+                header.style.height = '80px';
+            }
+        });
+    </script>
 </body>
+
 </html>
